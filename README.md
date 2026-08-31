@@ -1,36 +1,51 @@
-# Timewarrior Dashboard
+# Gutsu's Time
 
-Interactive analytics dashboard for [Timewarrior](https://timewarrior.org) time-tracking data.
+A professional, public time-tracking dashboard and blog powered by [Timewarrior](https://timewarrior.net/) and GitHub Pages.
 
-## Quick Start
+## Live Site
 
-**View on GitHub Pages:**
+Visit: `https://<user>.github.io/Timew/`
 
-1. Push this repo to GitHub
-2. Go to **Settings → Pages** → select `main` branch, root folder → Save
-3. The dashboard opens at `https://<user>.github.io/<repo>/`
+## Structure
 
-**Local:**
-
-```bash
-python3 -m http.server 8080
-# Open http://localhost:8080
+```
+├── index.html          # Dashboard (Stats, Blog, Videos)
+├── all-time.json       # Timewarrior export data
+├── posts/
+│   ├── index.json      # Blog post manifest
+│   └── *.md            # Markdown blog posts
+├── videos/
+│   ├── index.json      # Video manifest
+│   └── *.mp4           # Video files
+└── README.md
 ```
 
 ## How It Works
 
-The dashboard (`index.html`) automatically loads `all-time.json` on open. No manual file upload needed — just open the page and the data renders immediately.
+1. The dashboard auto-fetches `all-time.json` on every page load — no manual upload needed
+2. Blog posts are Markdown files listed in `posts/index.json`
+3. Videos are MP4 files listed in `videos/index.json`
 
-### Features
-- **Overview** — stats, activity heatmap, charts, tag bars
-- **Sessions Log** — searchable/sortable table with CSV/JSON export
-- **Goals & Insights** — daily/weekly targets, productivity analysis
-- **Themes** — Nordic Emerald, Cyberpunk Neon, Steel Slate
+## Publishing Content
 
-## Generating Data
-
+### Time Stats
 ```bash
-timew aggregate all-time report --annotations --finalized --color --bw > all-time.json
+timew export > all-time.json
+git add all-time.json && git commit -m "update stats" && git push
 ```
 
-Or copy your Timewarrior JSON export into `all-time.json`.
+### Blog Posts
+1. Write a `.md` file in `posts/`
+2. Add an entry to `posts/index.json`:
+```json
+{ "file": "my-post.md", "title": "Post Title", "date": "2026-08-31", "summary": "Brief description." }
+```
+3. Push to GitHub
+
+### Videos
+1. Place `.mp4` files in `videos/`
+2. Add an entry to `videos/index.json`:
+```json
+{ "file": "demo.mp4", "title": "Demo Video" }
+```
+3. Push to GitHub
